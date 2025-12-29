@@ -101,11 +101,13 @@ class WalkingNetwork:
     @staticmethod
     def get_edges():
         G = ox.graph_from_place("Amsterdam, Netherlands", network_type="walk")
+        
 
-        _, edges = ox.graph_to_gdfs(G)
+        nodes, edges = ox.graph_to_gdfs(G)
+        nodes = nodes.to_crs(epsg=4326)
         edges = edges.to_crs(epsg=4326)
 
-        return edges
+        return G, nodes, edges
 
 
 # ==================================================
@@ -148,16 +150,19 @@ def get_ams_data():
         # Download OSM data
         parks = Parks.get_parks()
         buildings = Buildings.get_buildings()
-        walking_edges = WalkingNetwork.get_edges()
+        walking_graph, walking_nodes, walking_edges = WalkingNetwork.get_edges()
 
         # Clip
         parks_ams = ClipData.clip_to_amsterdam(parks, ams_boundary)
         buildings_ams = ClipData.clip_to_amsterdam(buildings, ams_boundary)
+        # walking_graph_ams = ClipData.clip_to_amsterdam(walking_graph, ams_boundary)
+        walking_nodes_ams = ClipData.clip_to_amsterdam(walking_nodes, ams_boundary)
         walking_edges_ams = ClipData.clip_to_amsterdam(walking_edges, ams_boundary)
 
         # Save
         parks_ams.to_file("outputs/parks_ams.gpkg", driver="GPKG")
         buildings_ams.to_file("outputs/buildings_ams.gpkg", driver="GPKG")
+        walking_nodes_ams.to_file("outputs/walking_nodes_ams.gpkg", driver="GPKG")
         walking_edges_ams.to_file("outputs/walking_edges_ams.gpkg", driver="GPKG")
 
     return ams_boundary, parks_ams, buildings_ams, walking_edges_ams
