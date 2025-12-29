@@ -1,9 +1,15 @@
-from Amsterdam_park_accessibility.data_processing import AmsterdamBoundary
-from Amsterdam_park_accessibility.visualization import PlotAmsterdamBoundary
+from Amsterdam_park_accessibility.data_processing import get_ams_data
 
-ams = AmsterdamBoundary()
-data = ams.download_data()
-gdf = ams.to_geodataframe(data)
-ams_boundary = ams.filter_amsterdam()
+def main():
+    # Load or download AMS datasets
+    ams_boundary, parks_ams, buildings_ams, walking_edges_ams = get_ams_data()
 
-PlotAmsterdamBoundary.plot_boundary(ams_boundary)
+    # -------------------------------
+    # Your accessibility analysis here
+    # -------------------------------
+    print("Running accessibility analysis...")
+    # Example:
+    # run_accessibility(buildings_ams, parks_ams, walking_edges_ams)
+
+if __name__ == "__main__":
+    main()
