@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "park-accessibility"
+version = "0.1.0"
+description = "Geospatial analysis of park accessibility using OpenStreetMap data"
+authors = [{ name = "Anupriya" }]
+requires-python = ">=3.10"
+
+dependencies = [
+    "requests",
+    "numpy",
+    "scipy",
+    "fastapi",
+    "uvicorn",
+    "folium",
+    "matplotlib",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
