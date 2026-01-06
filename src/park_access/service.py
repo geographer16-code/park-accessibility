@@ -3,9 +3,9 @@ from typing import Optional, Tuple, Dict, Any
 
 from fastapi import FastAPI, Query
 
-from src.park_access.downloader import download_parks_geojson
-from src.park_access.kdtree import build_park_kdtree, nearest_park
-from src.park_access.geo import haversine_m
+from park_access.downloader import download_parks_geojson
+from park_access.kdtree import build_park_kdtree, nearest_park
+from park_access.geo import haversine_m
 
 import json
 from pathlib import Path
